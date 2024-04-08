@@ -5,4 +5,4 @@ Repository for Deep Generative Models homeworks of ITMO University course, 2024
 
 Курс "Глубокие генеративные модели (Deep Generative Models)" в AI Talant Hub.
 
-Домашние задания находятся в ветках данного репозитория с соответствующими названиями (hw_1, hw_2...)
+Домашние задания находятся в ветках данного репозитория с соответствующими названиями (homework_1, homework_2...)
