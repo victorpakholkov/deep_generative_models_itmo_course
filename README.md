@@ -1,2 +1,4 @@
-# deep_generative_models_itmo_course
-Repository for Deep Generative Models homeworks of ITMO University course, 2024
+### Пахолков Виктор Владимирович
+
+## Курс "Глубокие генеративные модели (Deep Generative Models)" в AITalantedHub
+## ДЗ 2. Имплементация GAN
