@@ -201,10 +201,112 @@ def train_gan(exp_num, criterion=nn.BCELoss(), lr_g=0.0001, lr_d=0.00005, batch_
 
 ### 4. Эксперименты
 
-Впоследствие, я хотел провести еще 4 эксперимента (есть в ноутбуке, но обучить и посмотреть на результаты я, к сожалению, не успел.
-Эксперименты должны были быть следующие:
-1) Уменьшить количество сверток в дискриминаторе, заменив один из слоев на AvgPool2d.  Меньшая по размеру модель теоретически слабее переобучается.
-2) Заменить функции активации в блоке CSPup на LeakyReLU
-3) batch_size = 256, LEARNING_RATE_G = 1e-4, LEARNING_RATE_D = 1e-4, 15 epochs
-4) все описанное выше вместе (batch_size = 256 + leakyrelu + avgpool2d + 15 epochs)
+После этого, я провел 4 эксперимента с помощью разных техник, но к сожалению, ни в одном случае добиться сходимости не получилось даже близко((.
+
+
+#### Эксперимент 1.
+
+В ходе первого эксперимента было уменьшено количество сверток в дискриминаторе, а один из слоев был заменен на AvgPool2d. 
+
+Теоретически меньшая по размеру модель должна слабее переобучаться и быть более генерализируемой. 
+
+AvgPool2d слой уменьшает пространственные размеры выходных представлений, сохраняя при этом среднее значение значений пикселей в области пула. Это приводит к уменьшению количества параметров в модели, что делает ее менее сложной и менее склонной к переобучению. Кроме того, слои пулинга, такие как AvgPool2d, могут помочь улучшить стабильность обучения, уменьшая размерность данных и, следовательно, количество вычислений, необходимых для обработки данных.
+
+Теперь дискриминатор выглядит так:
+
+```
+class Discriminator(nn.Module):
+    def __init__(self, ngpu):
+        super(Discriminator, self).__init__()
+        self.ngpu = ngpu
+        self.main = nn.Sequential(
+            nn.Conv2d(nc, ndf*2, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf*2),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.AvgPool2d(4, 2, 1),
+            nn.Conv2d(ndf*2, ndf * 4, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 4),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Conv2d(ndf * 4, ndf * 8, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Conv2d(ndf * 8, ndf * 16, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 16),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Conv2d(ndf * 16, 1, 4, 1, 0, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, input):
+        return self.main(input)
+```
+
+Однако, по результатам эксперимента на 10 эпохах, с лернинг рейт генератора в 0.0001 и лернинг рейт дискриминатора в 0.00003, размером бача в 64, добиться сходимости так и не удалось.
+
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/8cc38fb2-2a04-4e39-b5a6-deb0dde0bb42)
+
+
+
+#### Эксперимент 2.
+
+Второй эксперимент предполагал замену функции активации в блоке CSPup на LeakyReLU.
+
+Мне показалось это хорошей идеей, потому что LeakyReLU теоретически может улучшить сходимость модели обеспечивая непрерывный градиент вокруг нуля и позволяя нейронам продолжать обучаться даже при отрицательных входных значениях. Это может помочь предотвратить застой в локальных минимумах и улучшить сходимость модели. Кроме того, ReLU имеет проблему "мертвых" нейронов, когда нейроны могут "умереть" и перестать обучаться, если их выход становится равным нулю. Это может привести к тому, что модель не будет обучаться эффективно. LeakyReLU решает эту проблему, позволяя небольшому отрицательному градиенту проходить через нейрон, даже когда он неактивен, что позволяет нейрону продолжать обучаться.
+
+Теперь блок CSPup выглядит вот так:
+
+```
+class CSPup(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size=4, stride=2, padding=1):
+        super().__init__()
+        self.kernel_size =kernel_size
+        self.stride = stride
+        self.padding = padding
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.split_channels = self.in_channels//2
+        self.left = nn.Sequential(
+            nn.ConvTranspose2d(self.split_channels, self.out_channels, self.kernel_size, self.stride, self.padding, bias=False)
+        )
+        self.right = nn.Sequential(
+            nn.Conv2d(self.split_channels, self.out_channels , 1, 1, 0),
+            nn.BatchNorm2d(self.out_channels),
+            nn.LeakyReLU(0.2),
+            nn.ConvTranspose2d(self.out_channels, self.out_channels , self.kernel_size, self.stride, self.padding, bias=False),
+            nn.Conv2d(self.out_channels, self.out_channels , 1, 1, 0),
+            nn.BatchNorm2d(self.out_channels),
+            nn.LeakyReLU(0.2),
+            nn.Conv2d(self.out_channels, self.out_channels, 1, 1, 0),
+        )
+    def forward(self, x):
+        x1 = x[:, :self.split_channels, ...]
+        x2 = x[:, self.split_channels:, ...]
+        y = self.left(x1)+self.right(x2)
+        return y
+```
+
+Далее, система была обучена на все тех же 10 эпохах, при все тех же lr_g=0.0001, lr_d=0.0001, batch_size=64.
+
+Однако, добиться сходимости и тут не удалось (мягко говоря):
+
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/cb4b8c8b-0b7e-4dc8-a0d4-87dbe6251b20)
+
+
+#### Эксперимент 3.
+
+В третьем эксперименте я решил больше не трогать архитектуру сети, вернув все, как было изначально, а вместо этого поиграться с гиперпараметрами.
+
+Лернинг рейт и генератора, и дискриминатора был оставлен все тот же, а вот размер бэтча был заметно увеличен - до 256. Так же, количество эпох было увеличено с 10 до 15.
+
+Увеличение batch size может помочь улучшить стабильность обучения, поскольку это уменьшает вариации в градиентах между мини-выборками.
+Увеличение количества эпох может помочь улучшить точность модели, поскольку это дает модели больше времени для обучения и оптимизации. Это может помочь модели достичь более низкой функции потерь и более высокой точности.
+
+Несмотря на это, и тут результат оказался такой себе:
+
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/2c3c2836-fc94-400d-8732-ac27aabe831a)
+
+
+#### Эксперимент 4.
+
+7) все описанное выше вместе (batch_size = 256 + leakyrelu + avgpool2d + 15 epochs)
 
