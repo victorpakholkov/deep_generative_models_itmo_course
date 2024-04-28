@@ -19,6 +19,7 @@
 Музыкальные файлы в формате mp3 были скачены с Internet Archive:
 
 https://archive.org/details/black-star-the-album/Album/12-Thieves+In+The+Night.mp3 - исходник
+
 https://archive.org/details/frank-sinatra-the-very-best-of - референс (5 песен, That's life, My way, Fly me to the moon, Let's fall in love, New York)
 
 Затем, с помощью Ultimate Vocal Remover GUI и референсные композиции, и исходник были разделены на музыку и вокал.
