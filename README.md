@@ -44,8 +44,18 @@ Cоотношение - 1 к 1, высота и широта - 512, автома
 
 ### 2. LoRA
 
-К сожалению не успел дообучить, выбирал rank 4, 8 и 24, понизив lr до 5e-4
+Выбирал rank 4, 8 и 24, понизив lr до 5e-4
 
+Lora rank 4:
+
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/f48cd7d3-d4f0-41d5-bf59-0812e0bc82de)
+
+Lora rank 8:
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/6f10e838-a1c2-47b7-bbd5-53e81cdb4a3a)
+
+Lora rank 24:
+
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/2437f324-a1d8-4f4d-8639-da680c13bb29)
 
 
 ### 3. Сравнение Unet и Lora
