@@ -52,7 +52,8 @@
 
 ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/79fc504a-a89a-4c98-9b08-e82fadf7c33d)
 ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/d0a6394a-b046-4da1-b5d9-4632290e2ad2)
-![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/21771115-bb45-4fd5-acc8-01a7418c4a69)
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/6b9d0616-7eee-4b59-b344-85db27fbcb2e)
+
 
 *Таблица 2. Style transfer*
 
@@ -69,10 +70,19 @@
 
 ### 3. Expression Transfer
 
-К сожалению не успел сделать(( 
-
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/d2778936-ac1b-49d7-bea1-3de3dc226525)
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/408c164a-b313-4e7e-8257-005fb27dceac)
+![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/8f3ccf0a-f2b2-4129-b5fa-2bb3d59c9c81)
 *Таблица 3. Expression Transfer*
 
+В начале кода определены пути к expression файлам (age.pt, pose.pt, smile.pt). 
+После, определена функция interpolate(), которая принимает два латентных вектора, коэффициент интерполяции psi и список индексов, которые будут изменены. 
+Функция изменяет значения латентного вектора latent1 на основе латентного вектора latent2 с помощью линейной интерполяции. 
+Затем функция синтезирует изображения с помощью генератора StyleGAN на основе измененного латентного вектора и исходного латентного вектора.
+
+Далее в коде загружается латентный вектор выражения из expression файлов и распространяется на все изображения с помощью broadcast_w_sg(). 
+Затем для каждого латентного вектора изображения вызывается функция interpolate() для изменения выражения лица на основе латентного вектора выражения. 
+Получившиеся изображения добавляются в список, после чего выводятся на экран.
 
 
 ### 4. Face swap
