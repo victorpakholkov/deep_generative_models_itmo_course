@@ -51,6 +51,7 @@ Lora rank 4:
 ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/f48cd7d3-d4f0-41d5-bf59-0812e0bc82de)
 
 Lora rank 8:
+
 ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/6f10e838-a1c2-47b7-bbd5-53e81cdb4a3a)
 
 Lora rank 24:
