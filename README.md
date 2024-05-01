@@ -81,16 +81,11 @@ Lora rank 24:
 
 Prompt             |  Unet          | Lora rank 24 | 
 :-------------------------:|:-------------------------:|:-------------------------:
-Classic  |  ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/067997c6-ec7e-4c9f-a170-edbf911fb5b2)
- | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/09a7c97a-e2d5-40b5-98f4-561040bacb3c)
-Night city | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/db274ca0-c6a6-4df2-905f-7ea8b99be796)
- | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/eba77f87-d8a8-43e0-80e9-dad5829ce535)
-Kitchen | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/2763e6d0-58a5-48a9-bdfe-3c692f54e7da)
- | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/c8e7dd15-0b2e-4df3-a197-400b1eff4003)
-Forest | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/3a19f955-e1fd-4edd-b7ea-3f9801ee05d7)
- | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/bf8e7488-0f09-42e1-b3c5-05d61afd8253)
-Anime | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/169a2eb3-aebb-42d8-97d7-300721503d24)
- | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/c06001b3-ad49-4d52-a030-7dbd7d78c5e2)
+Classic  |  ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/067997c6-ec7e-4c9f-a170-edbf911fb5b2) | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/09a7c97a-e2d5-40b5-98f4-561040bacb3c)
+Night city | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/db274ca0-c6a6-4df2-905f-7ea8b99be796) | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/eba77f87-d8a8-43e0-80e9-dad5829ce535)
+Kitchen | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/2763e6d0-58a5-48a9-bdfe-3c692f54e7da) | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/c8e7dd15-0b2e-4df3-a197-400b1eff4003)
+Forest | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/3a19f955-e1fd-4edd-b7ea-3f9801ee05d7) | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/bf8e7488-0f09-42e1-b3c5-05d61afd8253)
+Anime | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/169a2eb3-aebb-42d8-97d7-300721503d24) | ![image](https://github.com/victorpakholkov/deep_generative_models_itmo_course/assets/56613496/c06001b3-ad49-4d52-a030-7dbd7d78c5e2)
 
 
 ### 4. ControlNet
